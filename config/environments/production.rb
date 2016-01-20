@@ -83,7 +83,7 @@ Rails.application.configure do
     address:              ENV['MAILER_ADDRESS'],
     domain:               ENV['MAILER_DOMAIN'],
     user_name:            ENV['MAILER_USERNAME'] || ENV['SENDGRID_USERNAME'],
-    password:             ENV['MAILER_PASSWORD'] || ENV['SENDGRID_APIKEY'],
+    password:             ENV['MAILER_PASSWORD'] || ENV['SENDGRID_PASSWORD'],
     port:                 587,
     authentication:       'plain',
     enable_starttls_auto: true }
