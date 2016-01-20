@@ -41,6 +41,6 @@
   "addons": [
     "rediscloud:30",
     "heroku-postgresql",
-    "mandrill:starter"
+    "sendgrid:starter"
   ]
 }
