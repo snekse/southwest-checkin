@@ -82,8 +82,8 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address:              ENV['MAILER_ADDRESS'],
     domain:               ENV['MAILER_DOMAIN'],
-    user_name:            ENV['MAILER_USERNAME'] || ENV['MANDRILL_USERNAME'],
-    password:             ENV['MAILER_PASSWORD'] || ENV['MANDRILL_APIKEY'],
+    user_name:            ENV['MAILER_USERNAME'] || ENV['SENDGRID_USERNAME'],
+    password:             ENV['MAILER_PASSWORD'] || ENV['SENDGRID_PASSWORD'],
     port:                 587,
     authentication:       'plain',
     enable_starttls_auto: true }
