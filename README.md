@@ -75,6 +75,90 @@ If you are interested in the old version, see the [1.0 branch](https://github.co
     bundle exec sidekiq
     ```
 
+
+## Heroku Installation
+
+1. While not strictly required, it is recommended to install [`rbenv`](https://github.com/sstephenson/rbenv) and [`ruby-build`](https://github.com/sstephenson/ruby-build) to manage ruby versions in development. Ruby 2.2 or greater is required.
+
+    - Note: Replace anything inside of <> with your projects information.
+    - Note: These instructions do not include steps to add email support.
+    - Note: This tutorial assumes you're using a Mac with OSX, if you're running something else you may need to make a few adjustments for your OS but should work mostly the same.
+    - Note: I recommend using Homebrew to install dependencies.
+
+2. Required dependencies
+
+    - Ruby 2.2 or greater
+    - Postgres
+    - Redis
+    - [Heroku Toolbelt](https://toolbelt.heroku.com/)
+
+3. Setup heroku and download latest version of the code:
+
+    - Create an account on Heroku
+    - From the web interface create a new app
+    - From the web interface add the following resources to your project:
+        - Redis To Go
+        - Heroku Postgres
+    - Create a folder and `cd` into it using Terminal
+
+    ```shell
+    cd Your/Project/Folder
+    git clone https://github.com/aortbals/southwest-checkin.git
+    heroku git:remote -a <YOUR_HEROKU_APP_NAME>
+    ```
+
+4. Get sidekiq to load the redis add-on's URL
+
+    ```shell
+    heroku config:set REDIS_PROVIDER=REDISTOGO_URL
+    ```
+
+
+5. Add ruby version to Gemfile:
+    
+    - Open the `Gemfile` located in the project folder and add the following lines near the top, right below `source 'https://rubygems.org'"`
+    
+    ```
+    ruby '2.2.0'
+    gem 'rails_12factor', group: :production
+    ```
+
+6. Remove line from `config/environments/production.rb`:
+
+    ```
+    config.logger = ActiveSupport::TaggedLogging.new(Syslogger.new("southwest-checkin", Syslog::LOG_PID, Syslog::LOG_LOCAL7))
+    ```
+
+7. Configure Heroku:
+
+    ```shell
+    heroku config:set SITE_NAME='Southwest Checkin' SITE_URL=<HEROKU_URL> ASSET_HOST=<HEROKU_URL> MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> DEPLOY_BRANCH=master DEPLOY_USER=deploy DEPLOY_PORT=22 MAILER_ADDRESS= MAILER_DOMAIN= MAILER_USERNAME= MAILER_PASSWORD= MAILER_DEFAULT_HOST= DEPLOY_DOMAIN= DEPLOY_TO= DEPLOY_REPOSITORY= AIRBRAKE_API_KEY= AIRBRAKE_HOST= AIRBRAKE_DEPLOY_NOTIFICATION=false
+    ```
+
+8. After installing the aforementioned dependencies (see step 2), install the ruby dependencies:
+
+    ```shell
+    gem install bundler
+    bundle install
+    ```
+
+9. Now commit and push your app to heroku:
+    
+    ```shell
+    git add .
+    git commit -am ""
+    git push heroku master
+    ```
+
+10. Create and seed the database:
+
+    ```shell
+    heroku run rake db:create db:migrate db:seed
+    ```
+
+11. Now browse to your Heroku's app url and start adding reservations.
+
+
 ## Contributing
 
 1. Fork it
