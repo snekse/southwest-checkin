@@ -95,8 +95,8 @@ If you are interested in the old version, see the [1.0 branch](https://github.co
 3. Setup heroku and download latest version of the code:
 
     - Create an account on Heroku
-    - From the web interface create a new app
-    - From the web interface add the following resources to your project:
+    - From the Heroku web interface create a new app
+    - From the Heroku web interface add the following resources to your project:
         - Redis To Go
         - Heroku Postgres
     - Create a folder and `cd` into it using Terminal
@@ -132,7 +132,7 @@ If you are interested in the old version, see the [1.0 branch](https://github.co
 7. Configure Heroku:
 
     ```shell
-    heroku config:set SITE_NAME='Southwest Checkin' SITE_URL=<HEROKU_URL> ASSET_HOST=<HEROKU_URL> MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> DEPLOY_BRANCH=master DEPLOY_USER=deploy DEPLOY_PORT=22 MAILER_ADDRESS= MAILER_DOMAIN= MAILER_USERNAME= MAILER_PASSWORD= MAILER_DEFAULT_HOST= DEPLOY_DOMAIN= DEPLOY_TO= DEPLOY_REPOSITORY= AIRBRAKE_API_KEY= AIRBRAKE_HOST= AIRBRAKE_DEPLOY_NOTIFICATION=false
+    heroku config:set SITE_NAME='Southwest Checkin' SITE_URL=<HEROKU_URL> ASSET_HOST=<HEROKU_URL> MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> DEPLOY_BRANCH=master DEPLOY_USER=deploy DEPLOY_PORT=22
     ```
 
 8. After installing the aforementioned dependencies (see step 2), install the ruby dependencies:
@@ -156,7 +156,18 @@ If you are interested in the old version, see the [1.0 branch](https://github.co
     heroku run rake db:create db:migrate db:seed
     ```
 
-11. Now browse to your Heroku's app url and start adding reservations.
+11. (Optional) Setup email with Mailgun
+
+    - From the Heroku web interface add the following resource to your project:
+        - Mailgun
+    - Once Mailgun is installed login to Mailgun (click on the Mailgun resource to automatically be logged in) and add your domain.  This might not be necessary but it's the only way I could get it to work for me.
+    - Once the domain has been verified, click on the domain to find the values for the following command and run it:
+
+    ```shell
+    heroku config:set MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> MAILER_ADDRESS=<SMTP_HOSTNAME> MAILER_DOMAIN=<HEROKU_URL> MAILER_USERNAME=<DEFAULT_SMTP_LOGIN> MAILER_PASSWORD=<DEFAULT_PASSWORD>
+    ```
+
+12. Now browse to your Heroku's app url and start adding reservations. 
 
 
 ## Contributing
