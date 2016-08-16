@@ -123,26 +123,20 @@ If you are interested in the old version, see the [1.0 branch](https://github.co
     gem 'rails_12factor', group: :production
     ```
 
-6. Remove line from `config/environments/production.rb`:
-
-    ```
-    config.logger = ActiveSupport::TaggedLogging.new(Syslogger.new("southwest-checkin", Syslog::LOG_PID, Syslog::LOG_LOCAL7))
-    ```
-
-7. Configure Heroku:
+6. Configure Heroku:
 
     ```shell
     heroku config:set SITE_NAME='Southwest Checkin' SITE_URL=<HEROKU_URL> ASSET_HOST=<HEROKU_URL> MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> DEPLOY_BRANCH=master DEPLOY_USER=deploy DEPLOY_PORT=22
     ```
 
-8. After installing the aforementioned dependencies (see step 2), install the ruby dependencies:
+7. After installing the aforementioned dependencies (see step 2), install the ruby dependencies:
 
     ```shell
     gem install bundler
     bundle install
     ```
 
-9. Now commit and push your app to heroku:
+8. Now commit and push your app to heroku:
     
     ```shell
     git add .
@@ -150,13 +144,13 @@ If you are interested in the old version, see the [1.0 branch](https://github.co
     git push heroku master
     ```
 
-10. Create and seed the database:
+9. Create and seed the database:
 
     ```shell
     heroku run rake db:create db:migrate db:seed
     ```
 
-11. (Optional) Setup email with Mailgun
+10. (Optional) Setup email with Mailgun
 
     - From the Heroku web interface add the following resource to your project:
         - Mailgun
@@ -167,7 +161,7 @@ If you are interested in the old version, see the [1.0 branch](https://github.co
     heroku config:set MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> MAILER_ADDRESS=<SMTP_HOSTNAME> MAILER_DOMAIN=<HEROKU_URL> MAILER_USERNAME=<DEFAULT_SMTP_LOGIN> MAILER_PASSWORD=<DEFAULT_PASSWORD>
     ```
 
-12. Now browse to your Heroku's app url and start adding reservations. 
+11. Now browse to your Heroku's app url and start adding reservations. 
 
 
 ## Contributing
