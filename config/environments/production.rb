@@ -46,51 +46,56 @@ Rails.application.configure do
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
-  config.log_level = :info
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
+  config.logger = Logger.new(STDOUT)
+
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  require 'syslogger'
-  config.logger = ActiveSupport::TaggedLogging.new(Syslogger.new("southwest-checkin", Syslog::LOG_PID, Syslog::LOG_LOCAL7))
-  config.lograge.enabled = true
-  config.lograge.formatter = Lograge::Formatters::Json.new
+  # require 'syslogger'
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslogger.new("southwest-checkin", Syslog::LOG_PID, Syslog::LOG_LOCAL7))
+  # config.lograge.enabled = true
+  # config.lograge.formatter = Lograge::Formatters::Json.new
 
-  Sidekiq::Logging.logger = ActiveSupport::TaggedLogging.new(Syslogger.new("sidekiq", Syslog::LOG_PID, Syslog::LOG_LOCAL7))
+  # Sidekiq::Logging.logger = ActiveSupport::TaggedLogging.new(Syslogger.new("sidekiq", Syslog::LOG_PID, Syslog::LOG_LOCAL7))
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = ENV['ASSET_HOST']
-  config.action_mailer.asset_host = ENV['ASSET_HOST']
+  config.action_mailer.asset_host = ENV['ASSET_HOST'] || ENV['SITE_URL']
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.default_url_options = {
-    host: ENV['MAILER_DEFAULT_HOST'],
+    host: ENV['SITE_URL'] || ENV['MAILER_DEFAULT_HOST'],
     protocol: ENV['MAILER_DEFAULT_PROTOCOL'] || 'https'
   }
 
   config.action_mailer.default_options  = {
     from: ENV['MAILER_DEFAULT_FROM_EMAIL'],
-    reply_to: ENV['MAILER_DEFAULT_REPLY_TO']
+    reply_to: ENV['MAILER_DEFAULT_REPLY_TO'] || ENV['MAILER_DEFAULT_FROM_EMAIL']
   }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              ENV['MAILER_ADDRESS'],
+    address:              ENV['MAILGUN_SMTP_SERVER'],
     domain:               ENV['MAILER_DOMAIN'],
-    user_name:            ENV['MAILER_USERNAME'],
-    password:             ENV['MAILER_PASSWORD'],
-    port:                 587,
-    authentication:       'plain',
+    user_name:            ENV['MAILGUN_SMTP_LOGIN'],
+    password:             ENV['MAILGUN_SMTP_PASSWORD'],
+    port:                 ENV['MAILGUN_SMTP_PORT'],
+    authentication:       :plain,
     enable_starttls_auto: true }
+#config.action_mailer.delivery_method = :mailgun
+#config.action_mailer.mailgun_settings = {domain: 'mg.pw10n.pw'}
+
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
