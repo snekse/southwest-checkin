@@ -57,9 +57,6 @@ gem 'newrelic_rpm'
 # Pagination
 gem 'kaminari'
 
-# Heroku access control
-gem 'rack-wwwhisper', '~> 1.0'
-
 # syslog logging with lograge
 # gem 'syslogger', '~> 1.6.0'
 # gem 'lograge', '~> 0.3.1'

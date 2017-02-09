@@ -54,4 +54,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Production") do |u, p|
+    [u, p] == [ENV['USERNAME'], ENV['SECRET']]
+  end
+
 end

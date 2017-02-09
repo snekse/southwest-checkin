@@ -161,7 +161,6 @@ GEM
     minitest (5.8.3)
     multi_json (1.10.1)
     nenv (0.1.1)
-    net-http-persistent (2.9.4)
     netrc (0.11.0)
     newrelic_rpm (3.14.1.311)
     nokogiri (1.6.5)
@@ -181,10 +180,6 @@ GEM
     rack-protection (1.5.3)
       rack
     rack-test (0.6.2)
-      rack (>= 1.0)
-    rack-wwwhisper (1.1.12)
-      addressable (~> 2.0)
-      net-http-persistent (< 3.0)
       rack (>= 1.0)
     rails (4.2.0)
       actionmailer (= 4.2.0)
@@ -356,7 +351,6 @@ DEPENDENCIES
   pg
   pry
   puma
-  rack-wwwhisper (~> 1.0)
   rails (= 4.2.0)
   roadie-rails
   rspec-rails (~> 3.0)
