@@ -180,3 +180,47 @@ MCI:
   dst: A
   timezone: America/Chicago
 
+LAX:
+  id: '3386'
+  name: Los Angeles Intl
+  city: Los Angeles
+  country: United States
+  iata: LAX
+  icao: KLAX
+  latitude: '33.942536'
+  longitude: "-118.408075"
+  airport_id: '3484'
+  altitude: '126'
+  timezone_offset: "-8.0"
+  dst: A
+  timezone: America/Los_Angeles
+
+BZE:
+  id: '1919'
+  name: Philip S W Goldson Intl
+  city: Belize City
+  country: Belize
+  iata: BZE
+  icao: MZBZ
+  latitude: '17.539144'
+  longitude: "-88.308203"
+  airport_id: '1957'
+  altitude: '15'
+  timezone_offset: "-6.0"
+  dst: U
+  timezone: America/Belize
+
+HOU:
+  id: '3468'
+  name: William P Hobby
+  city: Houston
+  country: United States
+  iata: HOU
+  icao: KHOU
+  latitude: '29.645419'
+  longitude: "-95.278889"
+  airport_id: '3566'
+  altitude: '46'
+  timezone_offset: "-6.0"
+  dst: A
+  timezone: America/Chicago
