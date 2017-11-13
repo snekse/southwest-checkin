@@ -4,8 +4,9 @@ class CheckinJob < ActiveJob::Base
 
   def perform(flight)
     checkin = Southwest::Checkin.new(
-      last_name: flight.reservation.last_name,
-      first_name: flight.reservation.first_name,
+      names: flight.reservation.passengers.map {|p|
+        { last_name: p[:last_name], first_name: p[:first_name] }
+      },
       record_locator: flight.reservation.confirmation_number)
 
     checkin_response = checkin.checkin
@@ -22,6 +23,7 @@ class CheckinJob < ActiveJob::Base
     end
 
     if checkin_response.code >= 400
+      perform(flight)
       raise Southwest::FailedCheckin, "The checkin for reservation '#{flight.reservation.id}' and flight '#{flight.id}' failed. Checkin record '#{checkin_record.id}' contains the payload.\n\nError:\n\t#{checkin_response.body['message']}\n\n"
     end
 
