@@ -2,20 +2,6 @@ require_relative './errors'
 
 module Southwest
   class Request
-    attr_reader :last_name
-    attr_reader :first_name
-    attr_reader :record_locator
-
-    def initialize(last_name:, first_name:, record_locator:)
-      unless last_name && first_name && record_locator
-        raise Southwest::RequestArgumentError, "last_name, first_name, record_locator are required"
-      end
-
-      @last_name = last_name
-      @first_name = first_name
-      @record_locator = record_locator
-    end
-
     protected
 
     def make_request(path, params, content_type)
@@ -34,7 +20,8 @@ module Southwest
     end
 
     def base_uri
-      'https://api-extensions.southwest.com/v1/mobile'
+      # 'https://api-extensions.southwest.com/v1/mobile'
+      'https://mobile.southwest.com/api/extensions/v1/mobile'
     end
 
     def user_agent
@@ -42,7 +29,8 @@ module Southwest
     end
 
     def api_key
-      "l7xx8d8bfce4ee874269bedc02832674129b"
+      # "l7xx8d8bfce4ee874269bedc02832674129b"
+      'l7xx12ebcbc825eb480faa276e7f192d98d1'
     end
   end
 end
