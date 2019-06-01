@@ -75,7 +75,95 @@ MAILER_DEFAULT_PROTOCOL=http
 MAILER_DEFAULT_HOST=mywebsite.com' > .env
 ```
 
-## Old but maybe useful bits
+# Old but maybe useful bits
+
+## Heroku Installation
+
+1. While not strictly required, it is recommended to install [`rbenv`](https://github.com/sstephenson/rbenv) and [`ruby-build`](https://github.com/sstephenson/ruby-build) to manage ruby versions in development. Ruby 2.2 or greater is required.
+
+    - Note: Replace anything inside of <> with your projects information.
+    - Note: These instructions do not include steps to add email support.
+    - Note: This tutorial assumes you're using a Mac with OSX, if you're running something else you may need to make a few adjustments for your OS but should work mostly the same.
+    - Note: I recommend using Homebrew to install dependencies.
+
+2. Required dependencies
+
+    - Ruby 2.2 or greater
+    - Postgres
+    - Redis
+    - [Heroku Toolbelt](https://toolbelt.heroku.com/)
+
+3. Setup heroku and download latest version of the code:
+
+    - Create an account on Heroku
+    - From the Heroku web interface create a new app
+    - From the Heroku web interface add the following resources to your project:
+        - Redis To Go
+        - Heroku Postgres
+    - Create a folder and `cd` into it using Terminal
+
+    ```shell
+    cd Your/Project/Folder
+    git clone https://github.com/aortbals/southwest-checkin.git
+    heroku git:remote -a <YOUR_HEROKU_APP_NAME>
+    ```
+
+4. Get sidekiq to load the redis add-on's URL
+
+    ```shell
+    heroku config:set REDIS_PROVIDER=REDISTOGO_URL
+    ```
+
+
+5. Add ruby version to Gemfile:
+    
+    - Open the `Gemfile` located in the project folder and add the following lines near the top, right below `source 'https://rubygems.org'"`
+    
+    ```
+    ruby '2.2.0'
+    gem 'rails_12factor', group: :production
+    ```
+
+6. Configure Heroku:
+
+    ```shell
+    heroku config:set SITE_NAME='Southwest Checkin' SITE_URL=<HEROKU_URL> ASSET_HOST=<HEROKU_URL> MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> DEPLOY_BRANCH=master DEPLOY_USER=deploy DEPLOY_PORT=22
+    ```
+
+7. After installing the aforementioned dependencies (see step 2), install the ruby dependencies:
+
+    ```shell
+    gem install bundler
+    bundle install
+    ```
+
+8. Now commit and push your app to heroku:
+    
+    ```shell
+    git add .
+    git commit -am ""
+    git push heroku master
+    ```
+
+9. Create and seed the database:
+
+    ```shell
+    heroku run rake db:create db:migrate db:seed
+    ```
+
+10. (Optional) Setup email with Mailgun
+
+    - From the Heroku web interface add the following resource to your project:
+        - Mailgun
+    - Once Mailgun is installed login to Mailgun (click on the Mailgun resource to automatically be logged in) and add your domain.  This might not be necessary but it's the only way I could get it to work for me.
+    - Once the domain has been verified, click on the domain to find the values for the following command and run it:
+
+    ```shell
+    heroku config:set MAILER_DEFAULT_FROM_EMAIL=<YOUR_EMAIL> MAILER_DEFAULT_REPLY_TO=<YOUR_EMAIL> MAILER_ADDRESS=<SMTP_HOSTNAME> MAILER_DOMAIN=<HEROKU_URL> MAILER_USERNAME=<DEFAULT_SMTP_LOGIN> MAILER_PASSWORD=<DEFAULT_PASSWORD>
+    ```
+
+11. Now browse to your Heroku's app url and start adding reservations. 
+
 
 Create a script to launch everything
 
