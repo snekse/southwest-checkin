@@ -1,6 +1,6 @@
 # Southwest Checkin 2.X
 
-[![Build Status](https://travis-ci.org/davidkassa/southwest-checkin.svg?branch=master)](https://travis-ci.org/davidkassa/southwest-checkin)
+[![Build Status](https://travis-ci.org/snekse/southwest-checkin.svg?branch=master)](https://travis-ci.org/snekse/southwest-checkin)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
@@ -33,7 +33,7 @@ Updated for Ruby 2.6.3, Rails 5.2.3 by a non-Rails person
 Grab the source for checkin
 
 ```
-git clone https://github.com/davidkassa/southwest-checkin.git
+git clone https://github.com/snekse/southwest-checkin.git
 cd southwest-checkin
 ```
 
